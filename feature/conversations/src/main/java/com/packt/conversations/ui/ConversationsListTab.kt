@@ -1,4 +1,4 @@
-package com.packt.conversations.ui.ui
+package com.packt.conversations.ui
 
 import androidx.annotation.StringRes
 import com.packt.conversations.R

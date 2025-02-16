@@ -1,5 +1,6 @@
-package com.packt.conversations.ui.ui
+package com.packt.conversations.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -20,8 +21,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.packt.conversations.R
+import com.packt.conversations.model.Conversation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,6 +32,7 @@ fun ConversationsListScreen(
     onNewConversationClick: () -> Unit,
     onConversationClick: (chatId: String) -> Unit
 ) {
+    val context = LocalContext.current
     val tabs = generateTabs()
     val selectedIndex = remember { mutableIntStateOf(1) }
     val pagerState = rememberPagerState(initialPage = 1) { tabs.size }
@@ -53,7 +57,9 @@ fun ConversationsListScreen(
                     Tab(
                         text = { Text(stringResource(id = tabs[index].title)) },
                         selected = index == 1,
-                        onClick = { /*TODO*/ }
+                        onClick = {
+                            Toast.makeText(context, "${context.getString(tabs[index].title)} pressed", Toast.LENGTH_SHORT).show()
+                        }
                     )
                 }
             }
@@ -73,10 +79,15 @@ fun ConversationsListScreen(
                         //Status
                     }
                     1 -> {
-                        //ConversationsListScreen(onNewConversationClick = onNewConversationClick)
+                        ConversationList(
+                            conversations = generateFakeConversations(),
+                            onConversationClick = onConversationClick
+                        )
+
                     }
                     2 -> {
                         //Chats
+
                     }
                 }
             }
@@ -84,5 +95,26 @@ fun ConversationsListScreen(
                 pagerState.animateScrollToPage(selectedIndex.intValue)
             }
         }
+    )
+}
+
+fun generateFakeConversations(): List<Conversation> {
+    return listOf(
+        Conversation(
+            id = "1",
+            name = "John Doe",
+            message = "Hey, how are you?",
+            timestamp = "10:30",
+            avatar = "https://i.pravatar.cc/150?u=1",
+            unreadCount = 2
+        ),
+        Conversation(
+            id = "2",
+            name = "Jane Smith",
+            message = "Unos besos o que padrino",
+            timestamp = "11:15",
+            avatar = "https://i.pravatar.cc/150?u=2",
+            unreadCount = 5
+        )
     )
 }

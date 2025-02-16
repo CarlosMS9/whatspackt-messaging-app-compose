@@ -6,11 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.packt.framework.navigation.NavRoutes
 import com.packt.chat.ui.ChatScreen
-import com.packt.conversations.ui.ui.ConversationsListScreen
+import com.packt.conversations.ui.ConversationsListScreen
 import com.packt.create_chat.ui.CreateConversationScreen
 
 @Composable
